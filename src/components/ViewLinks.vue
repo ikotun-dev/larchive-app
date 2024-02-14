@@ -13,7 +13,7 @@ let links = ref([])
 
 onMounted(async () => {
     const token = localStorage.getItem("token");
-    const res = await axios.get("http://127.0.0.1:3000/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
+    const res = await axios.get("https://linklocker-cool-morning-7742.fly.dev/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
     if (res.status == 200) {
         if (res.data.data == []) {
             links.value = []
@@ -30,7 +30,7 @@ const AddNewLink = async () => {
     const linkData = {
         linkUrl: linkInput.value
     }
-    const res = await axios.post("http://127.0.0.1:3000/link", linkData, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
+    const res = await axios.post("https://linklocker-cool-morning-7742.fly.dev/link", linkData, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
     if (res.data.statusCode == 201) {
         const dataset = res.data.data.reverse();
         links.value = dataset;
@@ -47,7 +47,7 @@ const deleteLink = async (id) => {
     const token = localStorage.getItem("token");
     console.log(token)
 
-    const res = await axios.delete(`http://localhost:3000/link?id=${id}`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
+    const res = await axios.delete(`https://linklocker-cool-morning-7742.fly.dev/link?id=${id}`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
     if (res.data.statusCode == 200) {
         const dataset = res.data.data.reverse();
         links.value = dataset;
