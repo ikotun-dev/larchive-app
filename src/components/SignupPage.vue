@@ -73,7 +73,7 @@ const isInputNotEmpty = computed(() =>  {
             class="rolling-element rounded-full border-b-4 border-l-4 border-t-4 w-6 h-6 border-black  border-opacity-100  ">
           </div>
         </button>
-        <RouterLink to="/">
+        <RouterLink style="text-decoration: none; color: inherit;" to="/">
           <p class="cursor-pointer text-white font-encode text-xs py-2 no-underline">Have an account? Login</p>
         </RouterLink>
       </div>

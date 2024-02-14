@@ -74,7 +74,7 @@ const isInputNotEmpty = computed(() =>  {
           </div>
         </button>
 
-        <RouterLink to="/signup">
+        <RouterLink style="text-decoration: none; color: inherit;" to="/signup">
           <p class="cursor-pointer text-white font-encode text-xs py-2 no-underline">Don't have an account? Signup</p>
       </RouterLink>
     </div>

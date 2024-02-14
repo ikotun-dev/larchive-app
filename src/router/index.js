@@ -3,6 +3,7 @@ import SignupPage from "../components/SignupPage"
 import LoginPage from "../components/LoginPage"
 import ViewLinks from "../components/ViewLinks"
 import ModalTest from "../components/ModalTest"
+import MainPage from "../components/MainPage"
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: '/modal-test',
     name: 'modal-test',
     component: ModalTest
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: MainPage
   }
 ]
 
