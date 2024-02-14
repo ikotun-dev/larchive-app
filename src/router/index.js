@@ -7,7 +7,7 @@ import MainPage from "../components/MainPage"
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component: LoginPage
   },
@@ -26,7 +26,7 @@ const routes = [
     component: ModalTest
   },
   {
-    path: '/home',
+    path: '/',
     name: 'home',
     component: MainPage
   }
