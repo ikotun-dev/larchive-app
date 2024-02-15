@@ -21,7 +21,7 @@ const loginUser = async () => {
     "password" : password.value
   } 
   console.log("here now ")
-  const res =  await axios.post("https://linklocker-cool-morning-7742.fly.dev/auth/login", loginData, { headers : { 'Origin': 'https://larchive-app.vercel.app','Content-Type' : 'application/json'}})
+  const res =  await axios.post("https://linklocker-cool-morning-7742.fly.dev/auth/login", loginData, { headers : { 'Content-Type' : 'application/json'}})
   console.log(res) 
   if (res.data.statusCode == 200){
     console.log("lmoaooo")

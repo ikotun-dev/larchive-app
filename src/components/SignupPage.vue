@@ -25,7 +25,7 @@ const signupUser = async () => {
 
   }
   try {
-    const res = await axios.post("https://linklocker-cool-morning-7742.fly.dev/auth/signup", signupData, { headers: { 'Origin': 'https://larchive-app.vercel.app','Content-Type': 'application/json' } })
+    const res = await axios.post("https://linklocker-cool-morning-7742.fly.dev/auth/signup", signupData, { headers: { 'Content-Type': 'application/json' } })
     console.log(res.status)
     if (res.data.statusCode == 201) {
       signupSuccess.value = true;
