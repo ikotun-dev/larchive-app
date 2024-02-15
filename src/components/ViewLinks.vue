@@ -34,9 +34,9 @@ const AddNewLink = async () => {
     if (res.data.statusCode == 201) {
         const dataset = res.data.data.reverse();
         links.value = dataset;
-     
-    }   submitLink.value = false;
-        setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
+
+    } submitLink.value = false;
+    setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
 }
 
 const deleteLink = async (id) => {
@@ -47,13 +47,13 @@ const deleteLink = async (id) => {
     const token = localStorage.getItem("token");
     console.log(token)
 
-    const res = await axios.delete(`https://linklocker-cool-morning-7742.fly.dev/link?id=${id}`, { headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
+    const res = await axios.delete(`https://linklocker-cool-morning-7742.fly.dev/link?id=${id}`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
     if (res.data.statusCode == 200) {
         const dataset = res.data.data.reverse();
         links.value = dataset;
         deleteLoader = false;
         setTimeout(() => { showDeleteModalVisible.value = false; }, 500)
-        
+
     }
 }
 
@@ -87,8 +87,7 @@ const showAddLinkModal = () => {
             <div class="delete-modal h-32 w-64 bg-white flex flex-col items-center justify-between s">
                 <h4 class="font-encode text-sm mt-4">Do you want to delete this link?</h4>
 
-                <span type="submit"
-                v-if="deleteLoader"
+                <span type="submit" v-if="deleteLoader"
                     class="bg-white text-black-darkest p-2 font-encode text-sm my-2 flex justify-center focus:outline-none">
                     <div
                         class="rolling-element rounded-full  border-b-4 border-l-4 border-t-4 w-6 h-6 border-black  border-opacity-100  ">
@@ -179,7 +178,7 @@ const showAddLinkModal = () => {
 
                 </div>
 
-                <div v-if="isFilteringLinks.length > 1 && searchParam.length > 0"
+                <div v-if="isFilteringLinks.length > 0 && searchParam.length > 0"
                     class="mt-4 w-full flex flex-col items-center">
 
                     <div v-for="link in isFilteringLinks" :key="link" @click="`window.location.href='${link.url}'`"
@@ -284,17 +283,17 @@ div.absolutex .add-link:hover {
     transform: scale(1.4);
     /* Add a scale effect on hover */
 }
+
 @keyframes roll {
-  to {
-    transform: rotate(360deg);
-  }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .rolling-element {
-  /* Add other classes if needed */
-  animation: roll 0.2s linear infinite;
+    /* Add other classes if needed */
+    animation: roll 0.2s linear infinite;
 }
-
 </style>
 
 
