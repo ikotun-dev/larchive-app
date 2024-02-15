@@ -35,7 +35,8 @@ const AddNewLink = async () => {
         const dataset = res.data.data.reverse();
         links.value = dataset;
 
-    } submitLink.value = false;
+    }linkInput.value = "" 
+    submitLink.value = false;
     setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
 }
 
