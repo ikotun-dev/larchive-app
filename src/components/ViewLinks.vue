@@ -15,7 +15,7 @@ let links = ref([])
 onMounted(async () => {
   const token = localStorage.getItem("token");
   if (!token) {
-    router.$push('/login')
+    router.push('/login')
     console.log("log")
   }
   const res = await axios.get("https://linklocker-cool-morning-7742.fly.dev/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
