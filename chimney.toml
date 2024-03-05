@@ -1,0 +1,12 @@
+host = "0.0.0.0"
+port = 80
+enable_logging = true
+root_dir = "/var/www/html"
+fallback_document = "index.html"
+
+[headers]
+"Cache-Control" = "public, max-age=2592000, immutable"
+"X-Frame-Options" = "DENY"
+"X-Content-Type-Options" = "nosniff"
+"X-XSS-Protection" = "1; mode=block"
+
