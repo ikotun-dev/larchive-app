@@ -33,17 +33,18 @@ const signupUser = async () => {
       console.log(res.data.accessToken)
       setTimeout(() => { router.push('/') }, 2500)
 
-    }if(res.data.statusCode == 401){
+    } if (res.data.statusCode == 401) {
       existingUsername.value = true;
-      setTimeout(() => { existingUsername.value = false; notClicked.value =true }, 3000)
+      notClicked.value = true
+      setTimeout(() => { existingUsername.value = false; notClicked.value = true }, 3000)
     }
   } catch (err) {
     console.log(err)
   }
 };
 
-const isInputNotEmpty = computed(() =>  {
-    return username.value.length > 4 && password.value.length > 4
+const isInputNotEmpty = computed(() => {
+  return username.value.length > 4 && password.value.length > 4
 })
 
 </script>
@@ -94,4 +95,5 @@ const isInputNotEmpty = computed(() =>  {
 .rolling-element {
   /* Add other classes if needed */
   animation: roll 0.2s linear infinite;
-}</style>
+}
+</style>
