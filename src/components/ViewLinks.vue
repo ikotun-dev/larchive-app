@@ -168,7 +168,6 @@ const showAddLinkModal = () => {
             </div>
 
             <div class="flex flex-col w-full">
-              <h4 class="font-encode text-blue-lighter text-md">REDIS</h4>
               <h3 class="text-blue font-encode  text-xs w-12 ">{{ link.url.slice(0, 20) }}....</h3>
               <p class="text-green-lighter font-encode  text-xs"> {{ link.date }} </p>
             </div>
@@ -198,7 +197,6 @@ const showAddLinkModal = () => {
             </div>
 
             <div class="flex flex-col w-full">
-              <h4 class="text-white font-encode text-xs mb-2">READING ON REDIS </h4>
               <h3 class="text-blue font-encode  text-xs w-12 ">{{ link.url.slice(0, 20) }}....</h3>
               <p class="text-white font-encode  text-xs"> {{ link.date }} </p>
             </div>
