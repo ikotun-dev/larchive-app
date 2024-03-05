@@ -117,9 +117,6 @@ const showAddLinkModal = () => {
         <h4 class="font-encode text-sm mt-4">Add a Link</h4>
 
         <input type="text" class="my-2 p-2 outline-none border font-encode border-black-darker w-full text-xs"
-          placeholder="description" v-model="linkName">
-
-        <input type="text" class="my-2 p-2 outline-none border font-encode border-black-darker w-full text-xs"
           placeholder="url" v-model="linkInput">
 
         <div class="flex justify-center items-center w-full" v-if="linkInput.length > 6">
