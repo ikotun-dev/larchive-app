@@ -16,15 +16,18 @@ const loginUser = async () => {
    //return setTimeout(() => { credentialValidation.value = true; } , 2000)
     
   }submit.value = true;
+
    const loginData = { 
     "username" : username.value,
     "password" : password.value
   } 
+
   console.log("here now ")
-  const res =  await axios.post("https://linklocker-cool-morning-7742.fly.dev/auth/login", loginData, { headers : { 'Content-Type' : 'application/json'}})
-  console.log(res) 
-  if (res.data.statusCode == 200){
-    console.log("lmoaooo")
+try{
+  const res =  await axios.post("https://larchive.fly.dev/user/login", loginData, { headers : { 'Content-Type' : 'application/json'}})
+  console.log(res.status) 
+
+  if (res.status === 200){
     localStorage.setItem('token', res.data.accessToken);
     router.push('/dashboard')
   }
@@ -35,14 +38,23 @@ const loginUser = async () => {
     submit.value = false;
   }
 
-
   console.log(`error : ${res.status}`)
+} catch(error){
+  if (error.response && error.response.status === 401 || error.response.status === 404) {
+    // Handle 401 status code
+
+    invalidCredentials.value = true;
+    submit.value = false;
+    setTimeout(() => { invalidCredentials.value = false; submit.value = false }, 3000);
+
+  }
+}
+
 }
 
 const isInputNotEmpty = computed(() =>  {
     return username.value.length > 4 && password.value.length > 4
 })
-
 
 
 </script>
@@ -65,7 +77,7 @@ const isInputNotEmpty = computed(() =>  {
         <input type="password" v-model="password"
           class="font-encode text-sm outline-none my-2 text-white p-2 bg-black-darkest border border-black-darker focus:border-white focus:bg-black-darkest"
           placeholder="password">
-        <button v-if="!submit" @click="loginUser" type="submit" :disabled="!isInputNotEmpty"
+        <button v-if="!submit" @click="loginUser()" type="submit" :disabled="!isInputNotEmpty"
           class="bg-white text-black-darkest p-2 font-encode text-sm my-2 hover:bg-black hover:text-white focus:outline-none">
 
           Login</button>

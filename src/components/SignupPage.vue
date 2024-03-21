@@ -20,26 +20,41 @@ const signupUser = async () => {
 
   } submit.value = true;
   const signupData = {
+    "email": "iiniinniin",
     "username": username.value,
     "password": password.value
 
   }
+
+  let res;
   try {
-    const res = await axios.post("https://linklocker-cool-morning-7742.fly.dev/auth/signup", signupData, { headers: { 'Content-Type': 'application/json' } })
-    console.log(res.status)
-    if (res.data.statusCode == 201) {
+    res = await axios.post("https://larchive.fly.dev/user/signup", signupData, { headers: { 'Content-Type': 'application/json' } })
+   // console.log(res.status)
+    if (res.status === 201) {
       signupSuccess.value = true;
       notClicked.value = true
       console.log(res.data.accessToken)
-      setTimeout(() => { router.push('/') }, 2500)
+      setTimeout(() => { router.push('/login') }, 2500)
 
-    } if (res.data.statusCode == 401) {
+    } 
+    else if (res.status == 401) {
+
       existingUsername.value = true;
       notClicked.value = true
       setTimeout(() => { existingUsername.value = false; notClicked.value = true }, 3000)
     }
+
   } catch (err) {
-    console.log(err)
+    if (err.response && err.response.status === 401) {
+    // Handle 401 status code
+    existingUsername.value = true;
+    notClicked.value = true;
+    setTimeout(() => { existingUsername.value = false; notClicked.value = true }, 3000);
+  } else {
+    // Handle other errors
+    console.log("An error occurred:", err);
+  }
+
   }
 };
 
@@ -48,7 +63,6 @@ const isInputNotEmpty = computed(() => {
 })
 
 </script>
-
 <template>
   <div class="bg-black-darkest h-screen">
     <div class="flex flex-col items-center p-8 space-y-20 ">
@@ -56,6 +70,7 @@ const isInputNotEmpty = computed(() => {
         Larchive
       </h3>
 
+      
       <div class="border-2 h-64 mt-36 lg:mt-64 p-4 flex flex-col justify-center w-72 lg:w-76   border-black-darker ">
         <h4 class="font-encode text-white p-1 ">Signup</h4>
         <p v-if="signupSuccess" class="text-sm font-encode text-green p-1">Signup success</p>
@@ -81,8 +96,6 @@ const isInputNotEmpty = computed(() => {
     </div>
   </div>
 </template>
-
-
 
 <style scoped>
 @keyframes roll {
