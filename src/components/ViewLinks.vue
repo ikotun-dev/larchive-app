@@ -19,6 +19,7 @@ onMounted(async () => {
     router.push('/login')
     console.log("log")
   }
+  try{
   const res = await axios.get("https://larchive.fly.dev/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
 
   if (res.status == 200) {
@@ -30,7 +31,13 @@ onMounted(async () => {
     const dataset = res.data.data.reverse();
     links.value = dataset;
     console.log(links.value);
+  } else {
+    router.push('/login')
+
   }
+} catch(e){
+  router.push('/login')
+}
 })
 
     function formatTime(timestamp){
@@ -55,9 +62,12 @@ const AddNewLink = async () => {
   if (res.status == 201) {
    // console.log(res.data.data)
    console.log( res.data.data)
-    const dataset =  res.data.data.reverse()
-    links.value = dataset;
+   // const dataset =  res.data.data.reverse()
+    links.value.unshift(res.data.data);
+
+
   } linkInput.value = ""
+
   submitLink.value = false;
   setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
 }
@@ -75,11 +85,13 @@ const deleteLink = async (id) => {
   const res = await axios.delete(`https://larchive.fly.dev/link?linkId=${id}`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
   if (res.status === 200) {
     console.log( res.data.data)
-    const dataset = res.data.data.reverse();
-    links.value = dataset;
+    links.value = links.value.filter(link => link._id !== id)
+
+    // const dataset = res.data.data.reverse();
+    // links.value = dataset;
     deleteLoader = false;
     setTimeout(() => { showDeleteModalVisible.value = false; }, 500)
-  }
+    }
 
 
 }
@@ -87,9 +99,8 @@ const deleteLink = async (id) => {
 
 const isFilteringLinks = computed(() => {
 
-
-  const searchTerm = searchParam.value.toLowerCase();
-  return links.value.filter((link) => link.url && link.url.includes(searchTerm))
+  const searchTerm = searchParam.value.toLowerCase(); 
+  return  links.value.filter((link) => link.url && link.url.includes(searchTerm) || link.title.includes(searchTerm)) 
   
 })
 
@@ -110,6 +121,7 @@ const showDeleteModal = (linkId) => {
 const showAddLinkModal = () => {
   showAddLinkModalVisible.value = true;
 }
+
 
 </script>
 <template>
@@ -142,7 +154,7 @@ const showAddLinkModal = () => {
       <div class="delete-modal px-2 h-auto lg:w-76  w-64 bg-white flex flex-col items-center justify-between">
         <h4 class="font-encode text-sm mt-4">Add a Link</h4>
 
-        <input type="text" class="my-2 p-2 outline-none border font-encode border-black-darker w-full text-xs"
+        <input type="text" class="my-2 p-2 outline-none border font-lato border-black-darker w-full text-xs"
           placeholder="title" v-model="linkTitle">
 
           <input type="text" class="my-2 p-2 outline-none border font-encode border-black-darker w-full text-xs"
@@ -196,9 +208,9 @@ const showAddLinkModal = () => {
 
 
             <div class="flex flex-col w-full mt-2 ">
-              <h3 class="text-green font-encode font-extrabold text-sm w-full ">{{link.title}}</h3>
+              <h3 class="text-blue font-lato font-bold text-sm w-full ">{{link.title}}</h3>
               <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
-              <p class="text-green-lighter font-encode  text-xs"> {{ formatTime(link.time) }} </p>
+              <p class="text-green-lighter font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
 
   
@@ -226,9 +238,9 @@ const showAddLinkModal = () => {
             </div>
 
             <div class="flex flex-col w-full mt-2">
-              <h3 class="text-green font-encode font-extrabold text-sm w-full ">{{link.title}}</h3>
+              <h3 class="text-blue font-lato font-bold text-sm w-full ">{{link.title}}</h3>
               <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
-              <p class="text-green-lighter font-encode  text-xs"> {{ formatTime(link.time) }} </p>
+              <p class="text-green-lighter font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
             <div class="flex justify-center items-center">
               <img class="w-24 h-16 rounded-lg" :src="`https://image.thum.io/get/${link.url}`" />

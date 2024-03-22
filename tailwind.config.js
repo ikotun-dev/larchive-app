@@ -230,7 +230,8 @@ module.exports = {
     ],
     'encode' : [
       "Encode Sans Semi Condensed", "sans-serif"
-    ]
+    ],
+    'lato' : ["Lato", "sans-serif"]
   },
 
 
