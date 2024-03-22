@@ -208,7 +208,7 @@ const showAddLinkModal = () => {
 
 
             <div class="flex flex-col w-full mt-2 ">
-              <h3 class="text-blue font-lato font-bold text-sm w-full ">{{link.title}}</h3>
+              <h3 class="text-green font-lato font-bold text-sm w-full ">{{link.title}}</h3>
               <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
               <p class="text-green-lighter font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
@@ -233,12 +233,12 @@ const showAddLinkModal = () => {
             <div class="flex justify-center items-center mr-4">
               <a :href="link.url" target="_blank">
                 <i class="fa-solid fa-up-right-from-square text-green-lightest text-xl"></i>
-
               </a>
             </div>
 
+            
             <div class="flex flex-col w-full mt-2">
-              <h3 class="text-blue font-lato font-bold text-sm w-full ">{{link.title}}</h3>
+              <h3 class="text-green font-lato font-bold text-sm w-full ">{{link.title}}</h3>
               <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
               <p class="text-green-lighter font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
