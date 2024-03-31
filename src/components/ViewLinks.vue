@@ -19,33 +19,33 @@ onMounted(async () => {
     router.push('/login')
     console.log("log")
   }
-  try{
-  const res = await axios.get("https://larchive.fly.dev/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
+  try {
+    const res = await axios.get("https://larchive.fly.dev/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
 
-  if (res.status == 200) {
-    console.log(res.data.data)
+    if (res.status == 200) {
+      console.log(res.data.data)
 
-    if (res.data.data == []) {
-      links.value = []
+      if (res.data.data == []) {
+        links.value = []
+      }
+      const dataset = res.data.data.reverse();
+      links.value = dataset;
+      console.log(links.value);
+    } else {
+      router.push('/login')
+
     }
-    const dataset = res.data.data.reverse();
-    links.value = dataset;
-    console.log(links.value);
-  } else {
+  } catch (e) {
     router.push('/login')
-
   }
-} catch(e){
-  router.push('/login')
-}
 })
 
-    function formatTime(timestamp){
-      const date = new Date(timestamp);
-      const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
-      const formattedTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-      return `${formattedDate} ${formattedTime}`;
-    }
+function formatTime(timestamp) {
+  const date = new Date(timestamp);
+  const formattedDate = `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  const formattedTime = `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
+  return `${formattedDate} ${formattedTime}`;
+}
 
 
 const AddNewLink = async () => {
@@ -60,9 +60,9 @@ const AddNewLink = async () => {
   const res = await axios.post("https://larchive.fly.dev/link", linkData, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
 
   if (res.status == 201) {
-   // console.log(res.data.data)
-   console.log( res.data.data)
-   // const dataset =  res.data.data.reverse()
+    // console.log(res.data.data)
+    console.log(res.data.data)
+    // const dataset =  res.data.data.reverse()
     links.value.unshift(res.data.data);
 
 
@@ -84,14 +84,14 @@ const deleteLink = async (id) => {
 
   const res = await axios.delete(`https://larchive.fly.dev/link?linkId=${id}`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
   if (res.status === 200) {
-    console.log( res.data.data)
+    console.log(res.data.data)
     links.value = links.value.filter(link => link._id !== id)
 
     // const dataset = res.data.data.reverse();
     // links.value = dataset;
     deleteLoader = false;
     setTimeout(() => { showDeleteModalVisible.value = false; }, 500)
-    }
+  }
 
 
 }
@@ -99,9 +99,9 @@ const deleteLink = async (id) => {
 
 const isFilteringLinks = computed(() => {
 
-  const searchTerm = searchParam.value.toLowerCase(); 
-  return  links.value.filter((link) => link.url && link.url.includes(searchTerm) || link.title.includes(searchTerm)) 
-  
+  const searchTerm = searchParam.value.toLowerCase();
+  return links.value.filter((link) => link.url && link.url.includes(searchTerm) || link.title.includes(searchTerm))
+
 })
 
 
@@ -157,7 +157,7 @@ const showAddLinkModal = () => {
         <input type="text" class="my-2 p-2 outline-none border font-lato border-black-darker w-full text-xs"
           placeholder="title" v-model="linkTitle">
 
-          <input type="text" class="my-2 p-2 outline-none border font-encode border-black-darker w-full text-xs"
+        <input type="text" class="my-2 p-2 outline-none border font-encode border-black-darker w-full text-xs"
           placeholder="url" v-model="linkInput">
 
 
@@ -201,19 +201,19 @@ const showAddLinkModal = () => {
 
             <div class="flex justify-center items-center mr-4">
               <a :href="link.url" target="_blank">
-                <i class="fa-solid fa-up-right-from-square text-green-lightest text-xl"></i>
+                <i class="fa-solid fa-up-right-from-square text-green-lighter text-xl"></i>
 
               </a>
             </div>
 
 
             <div class="flex flex-col w-full mt-2 ">
-              <h3 class="text-green font-lato font-bold text-sm w-full ">{{link.title}}</h3>
+              <h3 class="text-white font-lato font-bold text-sm w-full ">{{ link.title }}</h3>
               <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
-              <p class="text-green-lighter font-lato  text-xs"> {{ formatTime(link.time) }} </p>
+              <p class="text-green-light font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
 
-  
+
             <div class="flex justify-center items-center">
               <img class="w-24 h-16 rounded-lg" :src="`https://image.thum.io/get/${link.url}`" />
             </div>
@@ -236,9 +236,9 @@ const showAddLinkModal = () => {
               </a>
             </div>
 
-            
+
             <div class="flex flex-col w-full mt-2">
-              <h3 class="text-green font-lato font-bold text-sm w-full ">{{link.title}}</h3>
+              <h3 class="text-green font-lato font-bold text-sm w-full ">{{ link.title }}</h3>
               <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
               <p class="text-green-lighter font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
