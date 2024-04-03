@@ -59,13 +59,9 @@ const AddNewLink = async () => {
 
   const res = await axios.post("https://larchive.fly.dev/link", linkData, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
 
-  if (res.status == 201) {
-    // console.log(res.data.data)
+  if (res.status === 201) {
     console.log(res.data.data)
-    // const dataset =  res.data.data.reverse()
     links.value.unshift(res.data.data);
-
-
   } linkInput.value = ""
 
   submitLink.value = false;
