@@ -10,6 +10,7 @@ let linkIdToDelete = ref(null);
 let linkInput = ref("");
 let linkTitle = ref("");
 let deleteLoader = ref(false);
+import { useToast } from 'vue-toast-notification';
 
 let links = ref([])
 
@@ -22,14 +23,16 @@ onMounted(async () => {
   try {
     const res = await axios.get("https://larchive.fly.dev/link", { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
 
-    if (res.status == 200) {
+    if (res.status === 200) {
       console.log(res.data.data)
 
       if (res.data.data == []) {
         links.value = []
       }
       const dataset = res.data.data.reverse();
-      links.value = dataset;
+      const validDataset = dataset.filter((link) => link.url !== "")
+      console.log("valid dataset: " + validDataset)
+      links.value = validDataset;
       console.log(links.value);
     } else {
       router.push('/login')
@@ -39,6 +42,16 @@ onMounted(async () => {
     router.push('/login')
   }
 })
+
+
+const toast = useToast({ position: 'top' })
+function addedLink() {
+  toast.success('Link Added!');
+}
+
+function deletedLink() {
+  toast.info('Link Deleted!');
+}
 
 function formatTime(timestamp) {
   const date = new Date(timestamp);
@@ -60,12 +73,16 @@ const AddNewLink = async () => {
   const res = await axios.post("https://larchive.fly.dev/link", linkData, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
 
   if (res.status === 201) {
+    addedLink()
     console.log(res.data.data)
-    links.value.unshift(res.data.data);
-  } linkInput.value = ""
+    links.value = (res.data.data.reverse());
+    setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
 
-  submitLink.value = false;
-  setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
+  } else {
+    linkInput.value = ""
+    submitLink.value = false;
+    setTimeout(() => { showAddLinkModalVisible.value = false; }, 1000)
+  }
 }
 
 
@@ -80,6 +97,7 @@ const deleteLink = async (id) => {
 
   const res = await axios.delete(`https://larchive.fly.dev/link?linkId=${id}`, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
   if (res.status === 200) {
+    deletedLink()
     console.log(res.data.data)
     links.value = links.value.filter(link => link._id !== id)
 
@@ -205,7 +223,8 @@ const showAddLinkModal = () => {
 
             <div class="flex flex-col w-full mt-2 ">
               <h3 class="text-white font-lato font-bold text-sm w-full ">{{ link.title }}</h3>
-              <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.slice(0, 20) }}....</h3>
+              <h3 class="text-blue-lighter font-encode font-light text-xs w-12 my-1">{{ link.url.substring(0, 17) }}....
+              </h3>
               <p class="text-green-light font-lato  text-xs"> {{ formatTime(link.time) }} </p>
             </div>
 
